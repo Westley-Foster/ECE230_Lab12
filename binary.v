@@ -35,9 +35,9 @@ module binary(
         .reset(reset)
     );
 
-    assign z = (~state[0] & state[1]) | state[2];
-    assign next[0] = (state[1] & state[2]) | (state[0] & state[2] & ~w) | (~state[0] & ~state[1] & w) | (~state[1] & ~state[2] & w) | (~state[0] & ~state[1] & ~state[2]);
-    assign next[1] = (state[0] & ~state[2]) | (~state[0] & state[2]) | (~state[0] & ~state[1] & w);
-    assign next[2] = (state[1] & w) | (state[0] & state[2] & w );
+    assign z = state[2] | (state[1] & ~state[0]) ;
+    assign next[0] = (~state[2] & ~state[1] & ~state[0]) | (~state[2] & ~state[1] & w) | (~state[0] & w & ~state[2]) | (state[2] & ~w) | (state[1] & state[0] & ~w);
+    assign next[1] = (state[1] & ~state[0]) | (~state[2] & ~state[1] & w) | (~state[1] & state[0]);
+    assign next[2] = (state[2] & w) | (state[1] & state[0] & w);
     assign leds = state;
 endmodule
